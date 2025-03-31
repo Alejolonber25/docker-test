@@ -1,3 +1,49 @@
+### Dockerfile
+Este archivo define la imagen de Docker para la aplicación y contiene lo siguiente:
+
+```
+# Usa una imagen base de Node.js 18 optimizada para Alpine Linux (ligera y segura)
+FROM node:18-alpine  
+
+# Define el directorio de trabajo dentro del contenedor
+WORKDIR /app  
+
+# Copia los archivos de dependencias y las instala de manera eficiente
+COPY package.json package-lock.json ./  
+RUN npm install --frozen-lockfile  
+
+# Copia el resto del código fuente de la aplicación
+COPY . .  
+
+# Expone el puerto en el que se ejecutará la aplicación
+EXPOSE 3000  
+
+# Comando por defecto para iniciar la aplicación en modo desarrollo
+CMD ["npm", "run", "dev"]  
+
+```
+---
+
+### Credenciales de Docker Hub
+Para poder subir la imagen al registro de Docker, se generó un **access token** con permisos de lectura y escritura. Luego, estos datos se guardaron como **secrets** en el repositorio:
+
+- `DOCKER_USER`: Usuario de Docker Hub.
+- `DOCKER_PASS`: Token generado para autenticación segura.
+
+Esto permite autenticarse sin exponer las credenciales en el código.
+
+---
+
+### Workflow de GitHub Actions
+El archivo `.github/workflows/push.yml` define un flujo de trabajo automatizado que se ejecuta al hacer push en `main`.
+
+```
+
+```
+Este workflow permite generar y subir la imagen automáticamente a Docker Hub cada vez que se actualiza la rama `main`. 🚀
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
