@@ -67,8 +67,9 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKER_USER }}/mi-aplicacion:latest
 ```
-Este workflow permite generar y subir la imagen automáticamente a Docker Hub cada vez que se actualiza la rama `main`. 🚀
+Este workflow permite generar y subir la imagen automáticamente a Docker Hub cada vez que se actualiza la rama `main`. 
 
+![image](https://github.com/user-attachments/assets/6752f6a6-74d3-4666-9a57-516d81d5d075)
 
 
 # Getting Started with Create React App
