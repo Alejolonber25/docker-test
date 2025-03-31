@@ -38,7 +38,34 @@ Esto permite autenticarse sin exponer las credenciales en el código.
 El archivo `.github/workflows/push.yml` define un flujo de trabajo automatizado que se ejecuta al hacer push en `main`.
 
 ```
+name: Docker Build & Push
 
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Authenticate with Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_PASS }}
+
+      - name: Construct Docker Image
+        run: |
+          docker build --tag ${{ secrets.DOCKER_USER }}/mi-aplicacion:latest .
+
+      - name: Upload Docker Image
+        run: |
+          docker push ${{ secrets.DOCKER_USER }}/mi-aplicacion:latest
 ```
 Este workflow permite generar y subir la imagen automáticamente a Docker Hub cada vez que se actualiza la rama `main`. 🚀
 
